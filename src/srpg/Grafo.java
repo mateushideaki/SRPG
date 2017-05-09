@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -34,7 +35,7 @@ public class Grafo {
     private char matriz[][]; //matriz dos atributos
     private int somaMatriz; //usa para normalizar as distancias
 
-    public void ler() {
+    public void lerImagem() {
         this.img = null;
         try {
             this.img = ImageIO.read(new File("Perf01Bbbin.png"));
@@ -176,11 +177,6 @@ public class Grafo {
     }
 
     public void criaVetorAtributos(char m[][], int somaMatriz) {
-//        //APAGAR
-//        this.tl = 8;
-//        this.tc = 47;
-//        //ATE AQUI
-
         copiaMatriz(m);
         this.somaMatriz = somaMatriz;
         this.listaAtributos = new ArrayList<>();
@@ -193,6 +189,15 @@ public class Grafo {
                 }
             }
         }
+        this.listaAtributos.add(new Atributo('2', 0, 0, xc, yc, somaMatriz, k++));
+        this.listaAtributos.add(new Atributo('2', tl - 1, 0, xc, yc, somaMatriz, k++));
+        this.listaAtributos.add(new Atributo('2', 0, tc - 1, xc, yc, somaMatriz, k++));
+        this.listaAtributos.add(new Atributo('2', tl - 1, tc - 1, xc, yc, somaMatriz, k++));
+        this.matriz[0][0] = '2';
+        this.matriz[tl-1][0] = '2';
+        this.matriz[0][tc-1] = '2';
+        this.matriz[tl-1][tc-1] = '2';
+
     }
 
     public void copiaMatriz(char m[][]) {
@@ -224,17 +229,64 @@ public class Grafo {
         }
     }
 
-    
-
     public int temAtributoEmVolta(int x, int y) {
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (this.matriz[x + i][y + j] != '0' && this.matriz[x + i][y + j] != '1') {
+        int iniX = -1, iniY = -1, fimX = 1, fimY = 1;
+        if (x == 0) {
+            iniX = 0;
+        }
+        if (x >= this.tl - 1) {
+            fimX = 0;
+        }
+        if (y == 0) {
+            iniY = 0;
+        }
+        if (y >= this.tc - 1) {
+            fimY = 0;
+        }
+        for (int i = iniX; i <= fimX; i++) {
+            for (int j = iniY; j <= fimY; j++) {
+                if ((i != 0 || j != 0) && this.matriz[x + i][y + j] != '0' && this.matriz[x + i][y + j] != '1') {
                     return buscaPosAtributo(x + i, y + j);
                 }
             }
         }
         return -1;
+    }
+
+    public boolean zeroEmVolta(int x, int y) {
+        int iniX = -1, iniY = -1, fimX = 1, fimY = 1;
+        if (x == 0) {
+            iniX = 0;
+        }
+        if (x >= this.tl - 1) {
+            fimX = 0;
+        }
+        if (y == 0) {
+            iniY = 0;
+        }
+        if (y >= this.tc - 1) {
+            fimY = 0;
+        }
+
+        for (int i = iniX; i <= fimX; i++) {
+            for (int j = iniY; j <= fimY; j++) {
+                if ((i != 0 || j != 0) && this.matriz[x + i][y + j] != '0') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void removeRuidos() {
+        //para cada atributo, verifica na matriz se possui tudo 0 em volta, se for, remove da lista.
+        Iterator it = this.listaAtributos.iterator();
+        while (it.hasNext()) {
+            Atributo att = (Atributo) it.next();
+            if (zeroEmVolta(att.getXn(), att.getYn())) {
+                it.remove();
+            }
+        }
     }
 
     public void criaGrafo() {
@@ -273,7 +325,7 @@ public class Grafo {
                             ElementoPilha elemPush = new ElementoPilha(posPai, x + i, y + j, (elem.getDist() + 1));
                             pilha.add(elemPush);
                             this.matriz[elemPush.getX()][elemPush.getY()] = '0';
-                        }  
+                        }
                     }
                 }
                 if (soTemZero) {
@@ -281,7 +333,8 @@ public class Grafo {
                 }
             }
         }//FIM WHILE (PILHA VAZIA)
-        
+
+        //TRATAMENTO PARA O FINAL, QUANDO DUAS LINHAS SE ENCONTRAM A PARTIR DE DOIS ATRIBUTOS DIFERENTES
         for (int i = 0; i < zeroEmVolta.size() - 1; i++) {
             ElementoPilha elem1 = (ElementoPilha) zeroEmVolta.get(i);
             for (int j = i; j < zeroEmVolta.size(); j++) {

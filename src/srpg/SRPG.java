@@ -5,30 +5,31 @@ import java.io.FileNotFoundException;
 public class SRPG {
 
     public static void main(String[] args) throws FileNotFoundException {
-        LeArquivo leitor = new LeArquivo();
-        Grafo leitorImg = new Grafo();
+        LeArquivo leitorArquivo = new LeArquivo();
+        Grafo grafo = new Grafo();
 
-        leitor.ler("entrada1.txt");
-        //leitor.mostraMatriz();
-        leitor.somaMatriz();
+        leitorArquivo.ler("entrada1.txt");
+        //leitorArquivo.mostraMatriz();
+        leitorArquivo.somaMatriz();
 
-        leitorImg.ler();
-        leitorImg.computaCentroide();
-        leitorImg.criaVetorAtributos(leitor.getMatriz(), leitor.getSomaMatriz());
-        leitorImg.criaGrafo();
+        grafo.lerImagem();
+        grafo.computaCentroide();
+        grafo.criaVetorAtributos(leitorArquivo.getMatriz(), leitorArquivo.getSomaMatriz());
+        grafo.removeRuidos();
+        grafo.criaGrafo();
 
-        Compare compara = new Compare(leitorImg, leitorImg);
+        Compare compara = new Compare(grafo, grafo);
         //compara.ordenaPorAngulo();
         compara.calcSimilaridade();
-        //leitorImg.mostraAtributos();
-        //leitorImg.mostraGrafo();
+        //grafo.mostraAtributos();
+        //grafo.mostraGrafo();
 
 
-        //leitor.mostraMatriz();
+        //leitorArquivo.mostraMatriz();
     //CODIGO QUE MOSTRA A IMAGEM
         /*JFrame frame = new JFrame();
      frame.getContentPane().setLayout(new FlowLayout());
-     frame.getContentPane().add(new JLabel(new ImageIcon(leitorImg.getImg())));
+     frame.getContentPane().add(new JLabel(new ImageIcon(grafo.getImg())));
      frame.pack();
      frame.setVisible(true);*/
 }
