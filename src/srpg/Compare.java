@@ -19,7 +19,6 @@ public class Compare {
     private double beta; //DIFERENCA DE DISTANCIA DE DOIS ATRIBUTOS EM RELACAO AO CENTROIDE, QUE AINDA SEJA CONSIDERADO SIMILAR (VALOR POSITIVO)
     private double alpha; //DIFERENCA DE ANGULOS
     private double delta; //DIFERENCA DE DISTANCIA ENTRE OS ATRIBUTOS VIZINHOS
-    //private int gamma; //PORCENTAGEM MINIMA DE VIZINHOS SIMILARES PARA CONSIDERAR O ATRIBUTO SIMILAR
     private double similaridade;
     private Grafo g1;
     private Grafo g2;
@@ -28,7 +27,6 @@ public class Compare {
         this.beta = 0.00000;
         this.alpha = 0;
         this.delta = 0;
-        //this.gamma = 0;
         this.similaridade = 0;
         this.g1 = g1;
         this.g2 = g2;
