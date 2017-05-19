@@ -24,9 +24,9 @@ public class Compare {
     private Grafo g2;
 
     public Compare(Grafo g1, Grafo g2) {
-        this.beta = 0.00000;
-        this.alpha = 0;
-        this.delta = 0;
+        this.beta = 0.01;
+        this.alpha = 6;
+        this.delta = 0.01;
         this.similaridade = 0;
         this.g1 = g1;
         this.g2 = g2;
@@ -68,6 +68,7 @@ public class Compare {
             for (int j = 0; j < g2.getListaAtributos().size(); j++) {
                 Atributo a2 = g2.getListaAtributos().get(j);
                 if (a1.getId() == a2.getId()) {
+//                    System.out.println("centroide " + (Math.abs(a1.getDistCentroide() - a2.getDistCentroide())));
                     if (Math.abs(a1.getDistCentroide() - a2.getDistCentroide()) <= beta/* && Math.abs(a1.getAng() - a2.getAng()) <= alpha*/) { //valor absoluto de a1.dist - a2.dist
                         //se entrou aqui deu match "parcial" (apenas atributo com atributo sem contar similaridade da vizinhanca)
 
@@ -96,6 +97,7 @@ public class Compare {
                                 Atributo vizinho2 = vizinhanca2.get(v2);
                                 //Se algum atributo for escondido, outros podem ser afetados, entao pode nao possuir o mesmo ID
                                 //if (vizinho1.getId() == vizinho2.getId()) {
+//                                System.out.println("delta " + Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]));
                                     if (Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]) <= delta) {
                                         if (Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide()) <= beta) {
                                             if (Math.abs((a1.getAng() - vizinho1.getAng()) - (a2.getAng() - vizinho2.getAng())) <= alpha) {

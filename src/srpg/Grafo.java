@@ -5,17 +5,12 @@
  */
 package srpg;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -23,35 +18,14 @@ import javax.imageio.ImageIO;
  */
 public class Grafo {
 
-    private BufferedImage img;
-
+   
     private int tl; //total linhas
     private int tc; //total colunas
-    private int b[][]; //matriz BINARIA da imagem 
-    private int xc; //ponto x do centroide
-    private int yc; //ponto y do centroide
     private List<Atributo> listaAtributos;
     private double grafo[][]; //matriz de adjacencias
     private char matriz[][]; //matriz dos atributos
     private int somaMatriz; //usa para normalizar as distancias
 
-    public void lerImagem() {
-        this.img = null;
-        try {
-            this.img = ImageIO.read(new File("Perf01Bbbin.png"));
-            this.tl = this.img.getHeight();
-            this.tc = this.img.getWidth();
-        } catch (IOException e) {
-        }
-    }
-
-    public BufferedImage getImg() {
-        return img;
-    }
-
-    public void setImg(BufferedImage img) {
-        this.img = img;
-    }
 
     public int getTl() {
         return tl;
@@ -67,30 +41,6 @@ public class Grafo {
 
     public void setTc(int tc) {
         this.tc = tc;
-    }
-
-    public int[][] getB() {
-        return b;
-    }
-
-    public void setB(int[][] b) {
-        this.b = b;
-    }
-
-    public int getXc() {
-        return xc;
-    }
-
-    public void setXc(int xc) {
-        this.xc = xc;
-    }
-
-    public int getYc() {
-        return yc;
-    }
-
-    public void setYc(int yc) {
-        this.yc = yc;
     }
 
     public List<Atributo> getListaAtributos() {
@@ -145,38 +95,10 @@ public class Grafo {
         }
     }
 
-    public void mostraMatriz() {
-        for (int i = 0; i < this.tl; i++) {
-            for (int j = 0; j < this.tc; j++) {
-                System.out.print(b[i][j]);
-            }
-            System.out.println("");
-        }
-    }
 
-    public void computaCentroide() {
-        int sl, sc, n;
-        sl = 0;
-        sc = 0;
-        n = 0;
-        this.b = new int[this.tl][this.tc];
-        for (int i = 0; i < this.tl; i++) {
-            for (int j = 0; j < this.tc; j++) {
-                if (this.img.getRGB(j, i) != -1) { //sistema de coordenadas de imagens ao contrario 
-                    this.b[i][j] = 1;
-                    sl += i;
-                    sc += j;
-                    n++;
-                }
-            }
-        }
-        this.xc = sl / n; //INVERTIDO NA IMAGEM!!!! (yc, xc)
-        this.yc = sc / n;
-        //this.img.setRGB(yc, xc, 13414);
-        //System.out.println("sl " + sl/n + " sc " + sc/n);
-    }
-
-    public void criaVetorAtributos(char m[][], int somaMatriz) {
+    public void criaVetorAtributos(char m[][], int somaMatriz, int nLinhas, int nColunas, int xc, int yc) {
+        this.tl = nLinhas;
+        this.tc = nColunas;
         copiaMatriz(m);
         this.somaMatriz = somaMatriz;
         this.listaAtributos = new ArrayList<>();
@@ -189,14 +111,14 @@ public class Grafo {
                 }
             }
         }
-        this.listaAtributos.add(new Atributo('2', 0, 0, xc, yc, somaMatriz, k++));
-        this.listaAtributos.add(new Atributo('2', tl - 1, 0, xc, yc, somaMatriz, k++));
-        this.listaAtributos.add(new Atributo('2', 0, tc - 1, xc, yc, somaMatriz, k++));
-        this.listaAtributos.add(new Atributo('2', tl - 1, tc - 1, xc, yc, somaMatriz, k++));
-        this.matriz[0][0] = '2';
-        this.matriz[tl-1][0] = '2';
-        this.matriz[0][tc-1] = '2';
-        this.matriz[tl-1][tc-1] = '2';
+//        this.listaAtributos.add(new Atributo('2', 0, 0, xc, yc, somaMatriz, k++));
+//        this.listaAtributos.add(new Atributo('2', tl - 1, 0, xc, yc, somaMatriz, k++));
+//        this.listaAtributos.add(new Atributo('2', 0, tc - 1, xc, yc, somaMatriz, k++));
+//        this.listaAtributos.add(new Atributo('2', tl - 1, tc - 1, xc, yc, somaMatriz, k++));
+//        this.matriz[0][0] = '2';
+//        this.matriz[tl-1][0] = '2';
+//        this.matriz[0][tc-1] = '2';
+//        this.matriz[tl-1][tc-1] = '2';
 
     }
 
