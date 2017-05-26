@@ -17,12 +17,13 @@ public class Atributo {
     private int yn;
     private double distCentroide; //distancia do atributo ao centroide
     private int ang; //angulo do atributo em relacao ao centroide
+    private boolean matched;
 
     public Atributo(char i, int x, int y, int xc, int yc, int somaMatriz, int pos) {
         this.id = i;
         this.xn = x;
         this.yn = y;
-        this.distCentroide = this.calculaDist(xc, yc, somaMatriz) * 10;
+        this.distCentroide = this.calculaDist(xc, yc, somaMatriz) * 1000;
         this.ang = this.calculaAng(xc, yc);
         this.posInicial = pos;
     }
@@ -83,6 +84,14 @@ public class Atributo {
 
     public void setPosInicial(int posInicial) {
         this.posInicial = posInicial;
+    }
+
+    public boolean isMatched() {
+        return matched;
+    }
+
+    public void setMatched(boolean matched) {
+        this.matched = matched;
     }
 
 }

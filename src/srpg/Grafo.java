@@ -233,8 +233,8 @@ public class Grafo {
             posFilho = temAtributoEmVolta(x, y);
             if (posFilho != -1) {
                 Atributo filho = this.listaAtributos.get(posFilho);
-                this.grafo[posPai][posFilho] = (double) ((elem.getDist() + 1) / somaMatriz);
-                this.grafo[posFilho][posPai] = (double) ((elem.getDist() + 1) / somaMatriz);
+                this.grafo[posPai][posFilho] = (double) ((elem.getDist() + 1)* 1000 / somaMatriz);
+                this.grafo[posFilho][posPai] = (double) ((elem.getDist() + 1) * 1000/ somaMatriz);
                 ElementoPilha elemPush = new ElementoPilha(posFilho, filho.getXn(), filho.getYn(), 0);
                 pilha.add(elemPush);
                 this.matriz[elemPush.getX()][elemPush.getY()] = '0';
@@ -271,8 +271,8 @@ public class Grafo {
 //                                System.out.println(elem1.getPosPai() + " " + elem2.getPosPai());
 //                                System.out.println("");
 //                                System.out.println(elem1.getDist() + " " + elem2.getDist());
-                                this.grafo[elem1.getPosPai()][elem2.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()) / somaMatriz);
-                                this.grafo[elem2.getPosPai()][elem1.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()) / somaMatriz);
+                                this.grafo[elem1.getPosPai()][elem2.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()) * 1000 / somaMatriz);
+                                this.grafo[elem2.getPosPai()][elem1.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()) * 1000 / somaMatriz);
                             }
                         }
                     }

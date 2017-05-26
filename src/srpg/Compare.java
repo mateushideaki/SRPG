@@ -24,9 +24,10 @@ public class Compare {
     private Grafo g2;
 
     public Compare(Grafo g1, Grafo g2) {
-        this.beta = 0.01;
-        this.alpha = 6;
-        this.delta = 0.01;
+        this.beta = 20;
+        //VERIFICAR POR QUE A TOLERANCIA DE ANGULO PRECISA SER TAO ALTA PRA FICAR BOM
+        this.alpha = 10;
+        this.delta = 20;
         this.similaridade = 0;
         this.g1 = g1;
         this.g2 = g2;
@@ -63,15 +64,17 @@ public class Compare {
     }
 
     public void calcSimilaridade() {
+        double maiorSimilaridade = 0, media = 0, pctg = 0;
+        int matchVizinhos = 0;
+        Atributo maiorSimAtt;
         for (int i = 0; i < g1.getListaAtributos().size(); i++) {
             Atributo a1 = g1.getListaAtributos().get(i);
+            maiorSimilaridade = 0;
+            maiorSimAtt = null;
             for (int j = 0; j < g2.getListaAtributos().size(); j++) {
                 Atributo a2 = g2.getListaAtributos().get(j);
-                if (a1.getId() == a2.getId()) {
-//                    System.out.println("centroide " + (Math.abs(a1.getDistCentroide() - a2.getDistCentroide())));
-                    if (Math.abs(a1.getDistCentroide() - a2.getDistCentroide()) <= beta/* && Math.abs(a1.getAng() - a2.getAng()) <= alpha*/) { //valor absoluto de a1.dist - a2.dist
-                        //se entrou aqui deu match "parcial" (apenas atributo com atributo sem contar similaridade da vizinhanca)
-
+                if (a2.isMatched() == false && a1.getId() == a2.getId()) {
+                    if (Math.abs(a1.getDistCentroide() - a2.getDistCentroide()) <= beta) { //valor absoluto de a1.dist - a2.dist
                         List<Atributo> vizinhanca1 = new ArrayList<>();
                         List<Atributo> vizinhanca2 = new ArrayList<>();
 
@@ -82,7 +85,6 @@ public class Compare {
                             }
                         }
 
-                        //System.out.println(a1.getPosInicial() + " " + a1.getId() + " " + vizinhanca1.size());
                         for (int l = 0; l < g2.getListaAtributos().size(); l++) {
                             if (g2.getGrafo()[a2.getPosInicial()][l] != 0) {
                                 Atributo vizinho = g2.getListaAtributos().get(l);
@@ -90,31 +92,39 @@ public class Compare {
                             }
                         }
 
-                        int matchVizinhos = 0;
+                        matchVizinhos = 0;
                         for (int v1 = 0; v1 < vizinhanca1.size(); v1++) {
                             Atributo vizinho1 = vizinhanca1.get(v1);
                             for (int v2 = 0; v2 < vizinhanca2.size(); v2++) {
                                 Atributo vizinho2 = vizinhanca2.get(v2);
                                 //Se algum atributo for escondido, outros podem ser afetados, entao pode nao possuir o mesmo ID
-                                //if (vizinho1.getId() == vizinho2.getId()) {
+                                if (vizinho1.getId() == vizinho2.getId()) {
 //                                System.out.println("delta " + Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]));
                                     if (Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]) <= delta) {
+//                                        System.out.println("dif neigh dist " + Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]) + " dif neigh cent "+Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide())+ " dif neigh ang " + Math.abs((a1.getAng() - vizinho1.getAng()) - (a2.getAng() - vizinho2.getAng())));
+//                                        System.out.println("");
                                         if (Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide()) <= beta) {
                                             if (Math.abs((a1.getAng() - vizinho1.getAng()) - (a2.getAng() - vizinho2.getAng())) <= alpha) {
                                                 matchVizinhos++;
+                                                break;
                                             }
                                         }
                                     }
-                                //}
+                                }
                             }
                         }
-                        //System.out.println("v1 " + vizinhanca1.size() + "  v2 "+ vizinhanca2.size() + "  matchs " + matchVizinhos);
-                        double media = (double) (vizinhanca1.size() + vizinhanca2.size()) / 2;
-                        double pctg = (double) (matchVizinhos * 100) / media;
-                        this.similaridade += pctg;
+                        media = (double) (vizinhanca1.size() + vizinhanca2.size()) / 2;
+                        pctg = (double) (matchVizinhos * 100) / media;
+                        if (maiorSimilaridade < pctg) {
+                            maiorSimilaridade = pctg;
+                            maiorSimAtt = a2;
+                        }
                     }
                 }
             }
+            if(maiorSimAtt != null)
+                maiorSimAtt.setMatched(true);
+            this.similaridade += maiorSimilaridade;
         }
         double mediaAtt = (double) (g1.getListaAtributos().size() + g2.getListaAtributos().size()) * 100 / 2;
         this.similaridade = (double) (this.similaridade * 100) / mediaAtt;
