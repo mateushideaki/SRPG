@@ -115,9 +115,9 @@ public class LeArquivo {
         this.xc = sl / this.somaMatriz;
         this.yc = sc / this.somaMatriz;
 //        System.out.println("xc " + xc + " yc " + yc);
-//        File f = new File("C:\\Users\\mateu\\Desktop\\imgTeste.jpg");
+//        File f = new File("C:\\Users\\mateu\\Desktop\\Result\\PMV-258-TemplateBWSkel.jpg");
 //        this.img = ImageIO.read(f);
-//        this.img.setRGB(yc, xc, 255);
+//        this.img.setRGB(xc, yc, 255);
 //        ImageIO.write(img, "JPEG", f);
     }
 
@@ -170,7 +170,7 @@ public class LeArquivo {
     }
 
     public void mostraMatriz() {
-        for (int i = 0; i < this.nColunas; i++) {
+        for (int i = 0; i < this.nLinhas; i++) {
             System.out.println(this.matriz[i]);
         }
     }

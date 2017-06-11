@@ -23,7 +23,7 @@ public class Atributo {
         this.id = i;
         this.xn = x;
         this.yn = y;
-        this.distCentroide = this.calculaDist(xc, yc, somaMatriz) * 1000;
+        this.distCentroide = this.calculaDist(xc, yc, somaMatriz);
         this.ang = this.calculaAng(xc, yc);
         this.posInicial = pos;
     }

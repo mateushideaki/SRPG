@@ -24,10 +24,10 @@ public class Compare {
     private Grafo g2;
 
     public Compare(Grafo g1, Grafo g2) {
-        this.beta = 20;
+        this.beta = 0.05;
         //VERIFICAR POR QUE A TOLERANCIA DE ANGULO PRECISA SER TAO ALTA PRA FICAR BOM
-        this.alpha = 10;
-        this.delta = 20;
+        this.alpha = 2;
+        this.delta = 0.005;
         this.similaridade = 0;
         this.g1 = g1;
         this.g2 = g2;
@@ -67,7 +67,10 @@ public class Compare {
         double maiorSimilaridade = 0, media = 0, pctg = 0;
         int matchVizinhos = 0;
         Atributo maiorSimAtt;
+        int matchAtt = 0;
         for (int i = 0; i < g1.getListaAtributos().size(); i++) {
+            List<Atributo> vizinhanca1 = new ArrayList<>();
+            List<Atributo> vizinhanca2 = new ArrayList<>();
             Atributo a1 = g1.getListaAtributos().get(i);
             maiorSimilaridade = 0;
             maiorSimAtt = null;
@@ -75,8 +78,8 @@ public class Compare {
                 Atributo a2 = g2.getListaAtributos().get(j);
                 if (a2.isMatched() == false && a1.getId() == a2.getId()) {
                     if (Math.abs(a1.getDistCentroide() - a2.getDistCentroide()) <= beta) { //valor absoluto de a1.dist - a2.dist
-                        List<Atributo> vizinhanca1 = new ArrayList<>();
-                        List<Atributo> vizinhanca2 = new ArrayList<>();
+                        vizinhanca1 = new ArrayList<>();
+                        vizinhanca2 = new ArrayList<>();
 
                         for (int l = 0; l < g1.getListaAtributos().size(); l++) {
                             if (g1.getGrafo()[a1.getPosInicial()][l] != 0) {
@@ -104,7 +107,7 @@ public class Compare {
 //                                        System.out.println("dif neigh dist " + Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]) + " dif neigh cent "+Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide())+ " dif neigh ang " + Math.abs((a1.getAng() - vizinho1.getAng()) - (a2.getAng() - vizinho2.getAng())));
 //                                        System.out.println("");
                                         if (Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide()) <= beta) {
-                                            if (Math.abs((a1.getAng() - vizinho1.getAng()) - (a2.getAng() - vizinho2.getAng())) <= alpha) {
+                                            if (Math.abs(Math.abs(a1.getAng() - vizinho1.getAng()) - Math.abs(a2.getAng() - vizinho2.getAng())) <= alpha) {
                                                 matchVizinhos++;
                                                 break;
                                             }
@@ -116,16 +119,22 @@ public class Compare {
                         media = (double) (vizinhanca1.size() + vizinhanca2.size()) / 2;
                         pctg = (double) (matchVizinhos * 100) / media;
                         if (maiorSimilaridade < pctg) {
+//                            System.out.println(vizinhanca1.size() + " " + vizinhanca2.size() + " " + matchVizinhos);
+
                             maiorSimilaridade = pctg;
                             maiorSimAtt = a2;
                         }
                     }
                 }
             }
-            if(maiorSimAtt != null)
+            if (maiorSimAtt != null) {
                 maiorSimAtt.setMatched(true);
-            this.similaridade += maiorSimilaridade;
+                matchAtt++;
+                this.similaridade += maiorSimilaridade;
+//                System.out.println(maiorSimilaridade + " v1 " + vizinhanca1.size() + " v2 " + vizinhanca2.size());
+            }
         }
+//        System.out.println(matchAtt);
         double mediaAtt = (double) (g1.getListaAtributos().size() + g2.getListaAtributos().size()) * 100 / 2;
         this.similaridade = (double) (this.similaridade * 100) / mediaAtt;
         System.out.println("similaridade entre os grafos: " + this.similaridade + "%");
