@@ -223,7 +223,7 @@ public class Grafo {
                 Atributo filho = this.listaAtributos.get(posFilho);
                 this.grafo[posPai][posFilho] = (double) ((elem.getDist() + 1) / somaMatriz);
                 this.grafo[posFilho][posPai] = (double) ((elem.getDist() + 1) / somaMatriz);
-                System.out.println(this.grafo[posFilho][posPai]);
+//                System.out.println(this.grafo[posFilho][posPai]);
                 ElementoPilha elemPush = new ElementoPilha(posFilho, filho.getXn(), filho.getYn(), 0);
                 pilha.add(elemPush);
                 this.matriz[elemPush.getX()][elemPush.getY()] = '0';
@@ -294,7 +294,7 @@ public class Grafo {
                 Atributo filho = this.listaAtributos.get(posFilho);
                 this.grafo[posPai][posFilho] = (double) ((elem.getDist() + 1) / somaMatriz);
                 this.grafo[posFilho][posPai] = (double) ((elem.getDist() + 1) / somaMatriz);
-                System.out.println(this.grafo[posFilho][posPai]);
+//                System.out.println(this.grafo[posFilho][posPai]);
                 ElementoPilha elemPush = new ElementoPilha(posFilho, filho.getXn(), filho.getYn(), 0);
                 pilha.add(elemPush);
                 this.matriz[elemPush.getX()][elemPush.getY()] = '0';

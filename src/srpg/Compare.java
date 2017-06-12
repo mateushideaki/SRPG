@@ -24,9 +24,10 @@ public class Compare {
     private Grafo g2;
 
     public Compare(Grafo g1, Grafo g2) {
+        //0.012 100 0.034   0.05 5 0.005
         this.beta = 0.05;
         //VERIFICAR POR QUE A TOLERANCIA DE ANGULO PRECISA SER TAO ALTA PRA FICAR BOM
-        this.alpha = 2;
+        this.alpha = 5;
         this.delta = 0.005;
         this.similaridade = 0;
         this.g1 = g1;
@@ -107,6 +108,8 @@ public class Compare {
 //                                        System.out.println("dif neigh dist " + Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]) + " dif neigh cent "+Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide())+ " dif neigh ang " + Math.abs((a1.getAng() - vizinho1.getAng()) - (a2.getAng() - vizinho2.getAng())));
 //                                        System.out.println("");
                                         if (Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide()) <= beta) {
+//                                            System.out.println("dif ang " + Math.abs(Math.abs(a1.getAng() - vizinho1.getAng()) - Math.abs(a2.getAng() - vizinho2.getAng())));
+
                                             if (Math.abs(Math.abs(a1.getAng() - vizinho1.getAng()) - Math.abs(a2.getAng() - vizinho2.getAng())) <= alpha) {
                                                 matchVizinhos++;
                                                 break;
@@ -120,7 +123,6 @@ public class Compare {
                         pctg = (double) (matchVizinhos * 100) / media;
                         if (maiorSimilaridade < pctg) {
 //                            System.out.println(vizinhanca1.size() + " " + vizinhanca2.size() + " " + matchVizinhos);
-
                             maiorSimilaridade = pctg;
                             maiorSimAtt = a2;
                         }

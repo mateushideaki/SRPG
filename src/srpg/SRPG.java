@@ -10,8 +10,8 @@ public class SRPG {
         LeArquivo leitorArquivo = new LeArquivo();
         Grafo grafo = new Grafo();
 //        leitorArquivo.gravaImagem("C:\\Users\\mateu\\Dropbox\\TCC Mateus\\CasosReais\\Perfil001ASegtxt.txt");
-        leitorArquivo.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\VariacaoDist\\rotacionadoAtrib.txt");
-        leitorArquivo.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\VariacaoDist\\rotacionadotxt.txt");
+        leitorArquivo.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001AAtribThin.txt");
+        leitorArquivo.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001ASegtxt.txt");
         leitorArquivo.somaMatriz();
         leitorArquivo.computaCentroide();
 //        leitorArquivo.mostraMatriz();
@@ -24,15 +24,15 @@ public class SRPG {
 //        grafo2
         LeArquivo leitorArquivo2 = new LeArquivo();
         Grafo grafo2 = new Grafo();
-        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\VariacaoDist\\variacaoDist2Atrib.txt");
-        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\VariacaoDist\\variacaoDist2txt.txt");
+        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001BAtribThin.txt");
+        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001BSegtxt.txt");
         leitorArquivo2.somaMatriz();
         leitorArquivo2.computaCentroide();
         grafo2.criaVetorAtributos(leitorArquivo2.getMatriz(), leitorArquivo2.getSomaMatriz(), leitorArquivo2.getnLinhas(), leitorArquivo2.getnColunas(), leitorArquivo2.getXc(), leitorArquivo2.getYc());
         grafo2.removeRuidos();
         grafo2.criaGrafo();
 //        leitorArquivo2.mostraMatriz();
-        grafo2.mostraAtributos();
+//        grafo2.mostraAtributos();
         
         Compare compara = new Compare(grafo, grafo2);
         compara.calcSimilaridade();

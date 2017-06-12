@@ -33,9 +33,9 @@ public class Atributo {
     }
 
     public int calculaAng(int xc, int yc) {
-        double ang = Math.atan2((xc - this.xn), (this.yn - yc)); //o segundo e invertido devido ao eixo y da imagem ser invertido
+        double ang = Math.atan2((xc - this.xn), (yc - this.yn)); //o segundo e invertido devido ao eixo y da imagem ser invertido
         ang = Math.toDegrees(ang);
-        return (int) Math.round(ang);
+        return (int) Math.abs(Math.round(ang));
     }
 
     public char getId() {
