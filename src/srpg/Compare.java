@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -24,14 +25,28 @@ public class Compare {
     private Grafo g2;
 
     public Compare(Grafo g1, Grafo g2) {
-        //0.012 100 0.034   0.05 5 0.005
-        this.beta = 0.05;
-        //VERIFICAR POR QUE A TOLERANCIA DE ANGULO PRECISA SER TAO ALTA PRA FICAR BOM
+        //0.012 100 0.034   0.05 5 0.005 //para linha 0.0005 2 0.0005 
+        /////// this.beta = 0.0002; this.alpha = 2; this.delta = 0.00002;
+//        this.beta = 0.03;
         this.alpha = 5;
-        this.delta = 0.005;
+//        this.delta = 0.02;
         this.similaridade = 0;
         this.g1 = g1;
         this.g2 = g2;
+        g1.somaDist();
+        g1.somaDistVizinhos();
+        g2.somaDist();
+        g2.somaDistVizinhos();
+        this.beta = (g1.getSomaDistCent() + g2.getSomaDistCent())/(g1.getListaAtributos().size() + g2.getListaAtributos().size());
+        this.delta = (g1.getSomaDistViz() + g2.getSomaDistViz())/(g1.getTotalVizinhos() + g2.getTotalVizinhos());
+        System.out.println("beta " + beta + " delta " + delta);
+        System.out.println("nAtt1 " + g1.getListaAtributos().size() + " nAtt2 " + g2.getListaAtributos().size());
+    }
+
+    public void shuffle() {
+        long seed = System.nanoTime();
+        Collections.shuffle(g1.getListaAtributos(), new Random(seed));
+        Collections.shuffle(g2.getListaAtributos(), new Random(seed));
     }
 
     public void ordenaPorAngulo() {
@@ -70,18 +85,19 @@ public class Compare {
         Atributo maiorSimAtt;
         int matchAtt = 0;
         for (int i = 0; i < g1.getListaAtributos().size(); i++) {
-            List<Atributo> vizinhanca1 = new ArrayList<>();
-            List<Atributo> vizinhanca2 = new ArrayList<>();
+            List<Atributo> vizinhanca1;
+            List<Atributo> vizinhanca2;
             Atributo a1 = g1.getListaAtributos().get(i);
             maiorSimilaridade = 0;
             maiorSimAtt = null;
             for (int j = 0; j < g2.getListaAtributos().size(); j++) {
                 Atributo a2 = g2.getListaAtributos().get(j);
-                if (a2.isMatched() == false && a1.getId() == a2.getId()) {
+                if (!a2.isMatched() && a1.getId() == a2.getId()) {
+//                    System.out.println(Math.abs(a1.getDistCentroide() - a2.getDistCentroide()) + " " + a2.getPosInicial());
                     if (Math.abs(a1.getDistCentroide() - a2.getDistCentroide()) <= beta) { //valor absoluto de a1.dist - a2.dist
                         vizinhanca1 = new ArrayList<>();
                         vizinhanca2 = new ArrayList<>();
-
+//                        System.out.println("AQUI " + a2.getPosInicial());
                         for (int l = 0; l < g1.getListaAtributos().size(); l++) {
                             if (g1.getGrafo()[a1.getPosInicial()][l] != 0) {
                                 Atributo vizinho = g1.getListaAtributos().get(l);
@@ -108,9 +124,16 @@ public class Compare {
 //                                        System.out.println("dif neigh dist " + Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]) + " dif neigh cent "+Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide())+ " dif neigh ang " + Math.abs((a1.getAng() - vizinho1.getAng()) - (a2.getAng() - vizinho2.getAng())));
 //                                        System.out.println("");
                                         if (Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide()) <= beta) {
-//                                            System.out.println("dif ang " + Math.abs(Math.abs(a1.getAng() - vizinho1.getAng()) - Math.abs(a2.getAng() - vizinho2.getAng())));
-
-                                            if (Math.abs(Math.abs(a1.getAng() - vizinho1.getAng()) - Math.abs(a2.getAng() - vizinho2.getAng())) <= alpha) {
+                                            int distAngular1 = Math.abs(a1.getAng() - vizinho1.getAng());//Math.abs(Math.abs(a1.getAng() - vizinho1.getAng()) - Math.abs(a2.getAng() - vizinho2.getAng()));
+                                            int distAngular2 = Math.abs(a2.getAng() - vizinho2.getAng());
+                                            if (distAngular1 > 180) {
+                                                distAngular1 = 360 - distAngular1;
+                                            }
+                                            if (distAngular2 > 180) {
+                                                distAngular2 = 360 - distAngular2;
+                                            }
+//                                            System.out.println("dist ang " + Math.abs(distAngular1 - distAngular2));
+                                            if (Math.abs(distAngular1 - distAngular2) <= alpha) {
                                                 matchVizinhos++;
                                                 break;
                                             }
@@ -124,6 +147,7 @@ public class Compare {
                         if (maiorSimilaridade < pctg) {
 //                            System.out.println(vizinhanca1.size() + " " + vizinhanca2.size() + " " + matchVizinhos);
                             maiorSimilaridade = pctg;
+//                            System.out.println(pctg);
                             maiorSimAtt = a2;
                         }
                     }
