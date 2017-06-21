@@ -7,10 +7,12 @@ public class SRPG {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
+        System.out.println("Grafo 1");
+        System.out.println("");
         LeArquivo leitorArquivo = new LeArquivo();
         Grafo grafo = new Grafo();
-        leitorArquivo.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\VariacaoDist\\normalAtrib.txt");
-        leitorArquivo.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\VariacaoDist\\normaltxt.txt");
+        leitorArquivo.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\certos\\rotacionado\\normalAtrib.txt");
+        leitorArquivo.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\certos\\rotacionado\\normaltxt.txt");
 //        leitorArquivo.inverteMatrizAtributos();
         leitorArquivo.computaCentroide();
 //        leitorArquivo.gravaImagem("C:\\Users\\mateu\\Desktop\\Result\\quadradotxt.txt");
@@ -20,15 +22,19 @@ public class SRPG {
 //        grafo.mostraMatrizAtributos();
 //        grafo.gravaImagem("testando3.jpg", leitorArquivo.getXc(), leitorArquivo.getYc());
         grafo.criaGrafo();
+        System.out.println("N Atributos " + grafo.getListaAtributos().size());
 
         System.out.println("");
+        System.out.println("Grafo 2");
         System.out.println("");
 
 //        grafo2
         LeArquivo leitorArquivo2 = new LeArquivo();
         Grafo grafo2 = new Grafo();
-        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001BAtribThin.txt");
-        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001BSegtxt.txt");
+        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\certos\\rotacionado\\rotacionado2Atrib.txt");
+        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\certos\\rotacionado\\rotacionado2txt.txt");
+//        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\rotacionado2Atrib.txt");
+//        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\rotacionado2txt.txt");
 //        leitorArquivo2.inverteMatrizAtributos();
         leitorArquivo2.computaCentroide();
         grafo2.criaVetorAtributos(leitorArquivo2.getMatriz(), leitorArquivo2.getSomaMatriz(), leitorArquivo2.getnLinhas(), leitorArquivo2.getnColunas(), leitorArquivo2.getXc(), leitorArquivo2.getYc());
@@ -37,7 +43,8 @@ public class SRPG {
 //        grafo2.gravaImagem("testando2.jpg", leitorArquivo2.getXc(), leitorArquivo2.getYc());
 
         grafo2.criaGrafo();
-        
+        System.out.println("N Atributos " + grafo2.getListaAtributos().size());
+
 //        leitorArquivo2.mostraMatriz();
 //        grafo2.mostraAtributos();
         Compare compara = new Compare(grafo, grafo2);

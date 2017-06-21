@@ -52,7 +52,32 @@ public class Grafo {
             }
         }
         this.totalVizinhos = totalVizinhos / 2;
-        this.somaDistViz = somaDistViz / 2;
+        this.somaDistViz = (double) somaDistViz / 2;
+//        this.somaDistViz = this.somaDistViz / this.totalVizinhos;
+    }
+    
+    public void normalizaDistancias(){
+        this.somaDistVizinhos();
+        double distCent = 0, distViz = 0;
+        for(Atributo att : this.listaAtributos){
+            double temp = (double) att.getDistCentroide() / this.somaDistViz;
+            att.setDistCentroide(temp);
+            distCent += (double) temp;
+        }
+        
+        int n = this.getListaAtributos().size();
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(this.grafo[i][j] > 0) {
+                    double temp = this.grafo[i][j];
+                    this.grafo[i][j] = (double) temp/this.somaDistViz;
+                    distViz += temp/this.somaDistViz;
+                }
+            }
+        }
+//        this.somaDistCent = distCent;
+//        this.somaDistViz = distViz;
+        System.out.println(distCent + " " + distViz + " " + this.somaDistViz + " " + distViz);
     }
 
     public void gravaImagem(String nome, int x, int y) {
@@ -263,12 +288,12 @@ public class Grafo {
 //            }
 //        }
 //    }
-    public void somaDist() {
-        for (Atributo att : this.listaAtributos) {
-            this.somaDistCent += att.getDistCentroide();
-        }
-        this.somaDistCent = this.somaDistCent / 2;
-    }
+//    public void somaDist() {
+//        for (Atributo att : this.listaAtributos) {
+//            this.somaDistCent += att.getDistCentroide();
+//        }
+//        this.somaDistCent = this.somaDistCent / 2;
+//    }
 
     public void criaGrafo() {
         List zeroEmVolta = new ArrayList<>();
@@ -292,8 +317,8 @@ public class Grafo {
             posFilho = temAtributoEmVolta(x, y);
             if (posFilho != -1) {
                 Atributo filho = this.listaAtributos.get(posFilho);
-                this.grafo[posPai][posFilho] = (double) ((elem.getDist() + 1) / somaMatriz);
-                this.grafo[posFilho][posPai] = (double) ((elem.getDist() + 1) / somaMatriz);
+                this.grafo[posPai][posFilho] = (double) ((elem.getDist() + 1));
+                this.grafo[posFilho][posPai] = (double) ((elem.getDist() + 1));
 //                System.out.println(this.grafo[posFilho][posPai]);
                 ElementoPilha elemPush = new ElementoPilha(posFilho, filho.getXn(), filho.getYn(), 0);
                 pilha.add(elemPush);
@@ -331,14 +356,15 @@ public class Grafo {
 //                                System.out.println(elem1.getPosPai() + " " + elem2.getPosPai());
 //                                System.out.println("");
 //                                System.out.println(elem1.getDist() + " " + elem2.getDist());
-                                this.grafo[elem1.getPosPai()][elem2.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()) / somaMatriz);
-                                this.grafo[elem2.getPosPai()][elem1.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()) / somaMatriz);
+                                this.grafo[elem1.getPosPai()][elem2.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()));
+                                this.grafo[elem2.getPosPai()][elem1.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()));
                             }
                         }
                     }
                 }
             }
         }
+        this.normalizaDistancias();
     }
 
     public int getTotalVizinhos() {

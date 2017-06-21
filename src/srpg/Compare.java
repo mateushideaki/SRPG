@@ -27,20 +27,21 @@ public class Compare {
     public Compare(Grafo g1, Grafo g2) {
         //0.012 100 0.034   0.05 5 0.005 //para linha 0.0005 2 0.0005 
         /////// this.beta = 0.0002; this.alpha = 2; this.delta = 0.00002;
-//        this.beta = 0.03;
-        this.alpha = 5;
-//        this.delta = 0.02;
+        this.beta = 0.003;
+        this.alpha = 3;
+        this.delta = 0.003;
+//        this.beta = 30;
+//        this.alpha = 30;
+//        this.delta = 30;
         this.similaridade = 0;
         this.g1 = g1;
         this.g2 = g2;
-        g1.somaDist();
-        g1.somaDistVizinhos();
-        g2.somaDist();
-        g2.somaDistVizinhos();
-        this.beta = (g1.getSomaDistCent() + g2.getSomaDistCent())/(g1.getListaAtributos().size() + g2.getListaAtributos().size());
-        this.delta = (g1.getSomaDistViz() + g2.getSomaDistViz())/(g1.getTotalVizinhos() + g2.getTotalVizinhos());
-        System.out.println("beta " + beta + " delta " + delta);
-        System.out.println("nAtt1 " + g1.getListaAtributos().size() + " nAtt2 " + g2.getListaAtributos().size());
+//        g1.somaDist();
+//        g1.somaDistVizinhos();
+//        g2.somaDist();
+//        g2.somaDistVizinhos();
+//        this.beta = (g1.getSomaDistCent() + g2.getSomaDistCent())/(g1.getListaAtributos().size() + g2.getListaAtributos().size());
+//        this.delta = (g1.getSomaDistViz() + g2.getSomaDistViz())/(g1.getTotalVizinhos() + g2.getTotalVizinhos());
     }
 
     public void shuffle() {

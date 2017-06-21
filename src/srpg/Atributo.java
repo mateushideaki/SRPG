@@ -24,18 +24,18 @@ public class Atributo {
         this.id = i;
         this.xn = x;
         this.yn = y;
-        this.distCentroide = this.calculaDist(xc, yc, somaMatriz);
+        this.distCentroide = this.calculaDist(xc, yc);
         this.ang = this.calculaAng(xc, yc);
         this.posInicial = pos;
         this.nLinhas = nLinhas;
         this.matched = false;
     }
 
-    public double calculaDist(int xc, int yc, int somaMatriz) {
+    public double calculaDist(int xc, int yc) {
 //        System.out.println(Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc))));
 //        System.out.println(Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc))) / somaMatriz);
 //        System.out.println("");
-        return Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc))) / somaMatriz;
+        return Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc)));
     }
 
     public int calculaAng(int xc, int yc) {
