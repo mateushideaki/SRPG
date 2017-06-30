@@ -11,8 +11,10 @@ public class SRPG {
         System.out.println("");
         LeArquivo leitorArquivo = new LeArquivo();
         Grafo grafo = new Grafo();
-        leitorArquivo.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\certos\\rotacionado\\normalAtrib.txt");
-        leitorArquivo.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\certos\\rotacionado\\normaltxt.txt");
+        leitorArquivo.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\Perf02AAtribThin.txt");
+        leitorArquivo.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\Perf02ASegtxt.txt");
+//        leitorArquivo.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001AAtribThin.txt");
+//        leitorArquivo.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001ASegtxt.txt");
 //        leitorArquivo.inverteMatrizAtributos();
         leitorArquivo.computaCentroide();
 //        leitorArquivo.gravaImagem("C:\\Users\\mateu\\Desktop\\Result\\quadradotxt.txt");
@@ -31,8 +33,10 @@ public class SRPG {
 //        grafo2
         LeArquivo leitorArquivo2 = new LeArquivo();
         Grafo grafo2 = new Grafo();
-        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\certos\\rotacionado\\rotacionado2Atrib.txt");
-        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\certos\\rotacionado\\rotacionado2txt.txt");
+        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\Perf02BAtribThin.txt");
+        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\Perf02BSegtxt.txt");
+//        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001BAtribThin.txt");
+//        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\perfil001\\Perfil001BSegtxt.txt");
 //        leitorArquivo2.leMatrizAtributos("C:\\Users\\mateu\\Desktop\\Result\\rotacionado2Atrib.txt");
 //        leitorArquivo2.leMatrizBinaria("C:\\Users\\mateu\\Desktop\\Result\\rotacionado2txt.txt");
 //        leitorArquivo2.inverteMatrizAtributos();

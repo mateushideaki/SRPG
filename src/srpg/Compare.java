@@ -27,9 +27,9 @@ public class Compare {
     public Compare(Grafo g1, Grafo g2) {
         //0.012 100 0.034   0.05 5 0.005 //para linha 0.0005 2 0.0005 
         /////// this.beta = 0.0002; this.alpha = 2; this.delta = 0.00002;
-        this.beta = 0.003;
-        this.alpha = 3;
-        this.delta = 0.003;
+        this.beta = 0.02;
+        this.alpha = 5;
+        this.delta = 0.006;
 //        this.beta = 30;
 //        this.alpha = 30;
 //        this.delta = 30;
@@ -112,6 +112,7 @@ public class Compare {
                                 vizinhanca2.add(vizinho);
                             }
                         }
+//                        System.out.println("v1 " + vizinhanca1.size() + " v2 " + vizinhanca2.size());
 
                         matchVizinhos = 0;
                         for (int v1 = 0; v1 < vizinhanca1.size(); v1++) {
@@ -158,13 +159,14 @@ public class Compare {
                 maiorSimAtt.setMatched(true);
                 matchAtt++;
                 this.similaridade += maiorSimilaridade;
+//                System.out.println(maiorSimilaridade);
 //                System.out.println(maiorSimilaridade + " v1 " + vizinhanca1.size() + " v2 " + vizinhanca2.size());
             }
         }
 //        System.out.println(matchAtt);
         double mediaAtt = (double) (g1.getListaAtributos().size() + g2.getListaAtributos().size()) * 100 / 2;
         this.similaridade = (double) (this.similaridade * 100) / mediaAtt;
-        System.out.println("similaridade entre os grafos: " + this.similaridade + "%");
+       System.out.println("similaridade entre os grafos: " + this.similaridade + "%");
     }
 
     public Atributo encontraAtributo() {

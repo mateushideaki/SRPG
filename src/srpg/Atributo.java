@@ -35,7 +35,7 @@ public class Atributo {
 //        System.out.println(Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc))));
 //        System.out.println(Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc))) / somaMatriz);
 //        System.out.println("");
-        return Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc)));
+        return (double) Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc)));
     }
 
     public int calculaAng(int xc, int yc) {

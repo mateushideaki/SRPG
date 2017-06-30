@@ -76,8 +76,9 @@ public class Grafo {
             }
         }
 //        this.somaDistCent = distCent;
-//        this.somaDistViz = distViz;
-        System.out.println(distCent + " " + distViz + " " + this.somaDistViz + " " + distViz);
+        this.somaDistViz = distViz;
+        System.out.println(distCent + " " + distViz /*+ " " + this.somaDistViz + " " + distViz*/);
+        System.out.println("");
     }
 
     public void gravaImagem(String nome, int x, int y) {
