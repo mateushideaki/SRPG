@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -191,25 +192,10 @@ public class Grafo {
                 }
             }
         }
-//        this.listaAtributos.add(new Atributo('2', 0, 0, xc, yc, somaMatriz, k++));
-//        this.listaAtributos.add(new Atributo('2', tl - 1, 0, xc, yc, somaMatriz, k++));
-//        this.listaAtributos.add(new Atributo('2', 0, tc - 1, xc, yc, somaMatriz, k++));
-//        this.listaAtributos.add(new Atributo('2', tl - 1, tc - 1, xc, yc, somaMatriz, k++));
-//        this.matriz[0][0] = '2';
-//        this.matriz[tl-1][0] = '2';
-//        this.matriz[0][tc-1] = '2';
-//        this.matriz[tl-1][tc-1] = '2';
+
 
     }
 
-//    public void copiaMatriz(char m[][]) {
-//        this.matriz = new char[tl][tc];
-//        for (int i = 0; i < tl; i++) {
-//            for (int j = 0; j < tc; j++) {
-//                this.matriz[i][j] = m[i][j];
-//            }
-//        }
-//    }
     public int buscaPosAtributo(int x, int y) {
         int pos = -1;
         for (int i = 0; i < this.listaAtributos.size(); i++) {
@@ -289,12 +275,7 @@ public class Grafo {
 //            }
 //        }
 //    }
-//    public void somaDist() {
-//        for (Atributo att : this.listaAtributos) {
-//            this.somaDistCent += att.getDistCentroide();
-//        }
-//        this.somaDistCent = this.somaDistCent / 2;
-//    }
+
 
     public void criaGrafo() {
         List zeroEmVolta = new ArrayList<>();

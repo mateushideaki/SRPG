@@ -32,34 +32,19 @@ public class Atributo {
     }
 
     public double calculaDist(int xc, int yc) {
-//        System.out.println(Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc))));
-//        System.out.println(Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc))) / somaMatriz);
-//        System.out.println("");
         return (double) Math.sqrt(((this.xn - xc) * (this.xn - xc)) + ((this.yn - yc) * (this.yn - yc)));
     }
 
     public int calculaAng(int xc, int yc) {
-//        double ang = Math.atan2((xc - this.xn), (yc - this.yn)); //o segundo e invertido devido ao eixo y da imagem ser invertido
         int x = this.xn - xc;
         int y = (nLinhas - this.yn) - (nLinhas - yc);
-//        int somaQuadrante = 0;
-//        if (x < 0 && y < 0) {
-//            somaQuadrante = 180;
-//        } else if (x < 0) {
-//            somaQuadrante = 90;
-//        } else if (y < 0) {
-//            somaQuadrante = 270;
-//        }
 
-        double ang = Math.atan2(/*Math.abs*/(y), /*Math.abs*/(x)); //o segundo e invertido devido ao eixo y da imagem ser invertido
+        double ang = Math.atan2(y, x); //o segundo e invertido devido ao eixo y da imagem ser invertido
         ang = Math.toDegrees(ang);
         if (ang < 0) {
             ang += 360;
         }
-
-//        System.out.println((int) (Math.round(ang)));
-//        System.out.println(((int)(Math.round(ang))) + somaQuadrante);
-        return (((int) (Math.round(ang)))/* + somaQuadrante*/);
+        return (((int) (Math.round(ang))));
     }
 
     public char getId() {

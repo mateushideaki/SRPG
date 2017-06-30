@@ -35,13 +35,7 @@ public class Compare {
 //        this.delta = 30;
         this.similaridade = 0;
         this.g1 = g1;
-        this.g2 = g2;
-//        g1.somaDist();
-//        g1.somaDistVizinhos();
-//        g2.somaDist();
-//        g2.somaDistVizinhos();
-//        this.beta = (g1.getSomaDistCent() + g2.getSomaDistCent())/(g1.getListaAtributos().size() + g2.getListaAtributos().size());
-//        this.delta = (g1.getSomaDistViz() + g2.getSomaDistViz())/(g1.getTotalVizinhos() + g2.getTotalVizinhos());
+        this.g2 = g2;   
     }
 
     public void shuffle() {
