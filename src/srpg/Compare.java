@@ -1,8 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* <Sistema de Reconhecimento de Padrões utilizando Grafos.>
+    Copyright (C) <2017>  <Mateus Hideaki Taroda> <mateustaroda@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
+
 package srpg;
 
 import java.util.ArrayList;
@@ -11,10 +22,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-/**
- *
- * @author Mateus
- */
 public class Compare {
 
     private double beta; //DIFERENCA DE DISTANCIA DE DOIS ATRIBUTOS EM RELACAO AO CENTROIDE, QUE AINDA SEJA CONSIDERADO SIMILAR (VALOR POSITIVO)
@@ -25,14 +32,9 @@ public class Compare {
     private Grafo g2;
 
     public Compare(Grafo g1, Grafo g2) {
-        //0.012 100 0.034   0.05 5 0.005 //para linha 0.0005 2 0.0005 
-        /////// this.beta = 0.0002; this.alpha = 2; this.delta = 0.00002;
-        this.beta = 0.02;
+        this.beta = 0.04;
         this.alpha = 5;
         this.delta = 0.006;
-//        this.beta = 30;
-//        this.alpha = 30;
-//        this.delta = 30;
         this.similaridade = 0;
         this.g1 = g1;
         this.g2 = g2;   
@@ -78,7 +80,6 @@ public class Compare {
         double maiorSimilaridade = 0, media = 0, pctg = 0;
         int matchVizinhos = 0;
         Atributo maiorSimAtt;
-        int matchAtt = 0;
         for (int i = 0; i < g1.getListaAtributos().size(); i++) {
             List<Atributo> vizinhanca1;
             List<Atributo> vizinhanca2;
@@ -88,11 +89,9 @@ public class Compare {
             for (int j = 0; j < g2.getListaAtributos().size(); j++) {
                 Atributo a2 = g2.getListaAtributos().get(j);
                 if (!a2.isMatched() && a1.getId() == a2.getId()) {
-//                    System.out.println(Math.abs(a1.getDistCentroide() - a2.getDistCentroide()) + " " + a2.getPosInicial());
                     if (Math.abs(a1.getDistCentroide() - a2.getDistCentroide()) <= beta) { //valor absoluto de a1.dist - a2.dist
                         vizinhanca1 = new ArrayList<>();
                         vizinhanca2 = new ArrayList<>();
-//                        System.out.println("AQUI " + a2.getPosInicial());
                         for (int l = 0; l < g1.getListaAtributos().size(); l++) {
                             if (g1.getGrafo()[a1.getPosInicial()][l] != 0) {
                                 Atributo vizinho = g1.getListaAtributos().get(l);
@@ -106,21 +105,16 @@ public class Compare {
                                 vizinhanca2.add(vizinho);
                             }
                         }
-//                        System.out.println("v1 " + vizinhanca1.size() + " v2 " + vizinhanca2.size());
 
                         matchVizinhos = 0;
                         for (int v1 = 0; v1 < vizinhanca1.size(); v1++) {
                             Atributo vizinho1 = vizinhanca1.get(v1);
                             for (int v2 = 0; v2 < vizinhanca2.size(); v2++) {
                                 Atributo vizinho2 = vizinhanca2.get(v2);
-                                //Se algum atributo for escondido, outros podem ser afetados, entao pode nao possuir o mesmo ID
                                 if (vizinho1.getId() == vizinho2.getId()) {
-//                                System.out.println("delta " + Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]));
                                     if (Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]) <= delta) {
-//                                        System.out.println("dif neigh dist " + Math.abs(g1.getGrafo()[a1.getPosInicial()][vizinho1.getPosInicial()] - g2.getGrafo()[a2.getPosInicial()][vizinho2.getPosInicial()]) + " dif neigh cent "+Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide())+ " dif neigh ang " + Math.abs((a1.getAng() - vizinho1.getAng()) - (a2.getAng() - vizinho2.getAng())));
-//                                        System.out.println("");
                                         if (Math.abs(vizinho1.getDistCentroide() - vizinho2.getDistCentroide()) <= beta) {
-                                            int distAngular1 = Math.abs(a1.getAng() - vizinho1.getAng());//Math.abs(Math.abs(a1.getAng() - vizinho1.getAng()) - Math.abs(a2.getAng() - vizinho2.getAng()));
+                                            int distAngular1 = Math.abs(a1.getAng() - vizinho1.getAng());
                                             int distAngular2 = Math.abs(a2.getAng() - vizinho2.getAng());
                                             if (distAngular1 > 180) {
                                                 distAngular1 = 360 - distAngular1;
@@ -128,7 +122,6 @@ public class Compare {
                                             if (distAngular2 > 180) {
                                                 distAngular2 = 360 - distAngular2;
                                             }
-//                                            System.out.println("dist ang " + Math.abs(distAngular1 - distAngular2));
                                             if (Math.abs(distAngular1 - distAngular2) <= alpha) {
                                                 matchVizinhos++;
                                                 break;
@@ -141,9 +134,7 @@ public class Compare {
                         media = (double) (vizinhanca1.size() + vizinhanca2.size()) / 2;
                         pctg = (double) (matchVizinhos * 100) / media;
                         if (maiorSimilaridade < pctg) {
-//                            System.out.println(vizinhanca1.size() + " " + vizinhanca2.size() + " " + matchVizinhos);
                             maiorSimilaridade = pctg;
-//                            System.out.println(pctg);
                             maiorSimAtt = a2;
                         }
                     }
@@ -151,13 +142,9 @@ public class Compare {
             }
             if (maiorSimAtt != null) {
                 maiorSimAtt.setMatched(true);
-                matchAtt++;
                 this.similaridade += maiorSimilaridade;
-//                System.out.println(maiorSimilaridade);
-//                System.out.println(maiorSimilaridade + " v1 " + vizinhanca1.size() + " v2 " + vizinhanca2.size());
             }
         }
-//        System.out.println(matchAtt);
         double mediaAtt = (double) (g1.getListaAtributos().size() + g2.getListaAtributos().size()) * 100 / 2;
         this.similaridade = (double) (this.similaridade * 100) / mediaAtt;
        System.out.println("similaridade entre os grafos: " + this.similaridade + "%");

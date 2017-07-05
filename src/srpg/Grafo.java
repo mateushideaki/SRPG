@@ -1,3 +1,19 @@
+/* <Sistema de Reconhecimento de Padrões utilizando Grafos.>
+    Copyright (C) <2017>  <Mateus Hideaki Taroda> <mateustaroda@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
+
 package srpg;
 
 import java.awt.image.BufferedImage;
@@ -54,7 +70,6 @@ public class Grafo {
         }
         this.totalVizinhos = totalVizinhos / 2;
         this.somaDistViz = (double) somaDistViz / 2;
-//        this.somaDistViz = this.somaDistViz / this.totalVizinhos;
     }
     
     public void normalizaDistancias(){
@@ -76,9 +91,8 @@ public class Grafo {
                 }
             }
         }
-//        this.somaDistCent = distCent;
         this.somaDistViz = distViz;
-        System.out.println(distCent + " " + distViz /*+ " " + this.somaDistViz + " " + distViz*/);
+        System.out.println(distCent + " " + distViz);
         System.out.println("");
     }
 
@@ -101,7 +115,6 @@ public class Grafo {
             img.setRGB(x, y, 16711680);
             File f = new File("C:\\Users\\mateu\\Desktop\\" + nome);
             ImageIO.write(img, "JPEG", f);
-            //mostraMatriz();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erro na leitura do arquivo!");
@@ -187,7 +200,6 @@ public class Grafo {
         for (int i = 0; i < this.tl; i++) {
             for (int j = 0; j < this.tc; j++) {
                 if ((m[i][j] != '0') && (m[i][j] != '1' && (m[i][j] != ' '))) {
-//                    System.out.println(xc + " " + yc + "      " + i + " " + j);
                     this.listaAtributos.add(new Atributo(m[i][j], i, j, yc, xc, somaMatriz, k++, nLinhas));
                 }
             }
@@ -265,16 +277,15 @@ public class Grafo {
         return true;
     }
 
-//    public void removeRuidos() {
-//        //para cada atributo, verifica na matriz se possui tudo 0 em volta, se for, remove da lista.
-//        Iterator it = this.listaAtributos.iterator();
-//        while (it.hasNext()) {
-//            Atributo att = (Atributo) it.next();
-//            if (zeroEmVolta(att.getXn(), att.getYn())) {
-//                it.remove();
-//            }
-//        }
-//    }
+    public void removeRuidos() {
+        Iterator it = this.listaAtributos.iterator();
+        while (it.hasNext()) {
+            Atributo att = (Atributo) it.next();
+            if (zeroEmVolta(att.getXn(), att.getYn())) {
+                it.remove();
+            }
+        }
+    }
 
 
     public void criaGrafo() {
@@ -301,7 +312,6 @@ public class Grafo {
                 Atributo filho = this.listaAtributos.get(posFilho);
                 this.grafo[posPai][posFilho] = (double) ((elem.getDist() + 1));
                 this.grafo[posFilho][posPai] = (double) ((elem.getDist() + 1));
-//                System.out.println(this.grafo[posFilho][posPai]);
                 ElementoPilha elemPush = new ElementoPilha(posFilho, filho.getXn(), filho.getYn(), 0);
                 pilha.add(elemPush);
                 this.matriz[elemPush.getX()][elemPush.getY()] = '0';
@@ -332,12 +342,6 @@ public class Grafo {
                     for (int l = -1; l <= 1; l++) {
                         if (k != 0 || l != 0) {
                             if (elem1.getX() == elem2.getX() + k && elem1.getY() == elem2.getY() + l) {
-//                                System.out.println(elem1.getX() + " " + elem1.getY());
-//                                System.out.println(elem2.getX() + " " + elem2.getY());
-//                                System.out.println("");
-//                                System.out.println(elem1.getPosPai() + " " + elem2.getPosPai());
-//                                System.out.println("");
-//                                System.out.println(elem1.getDist() + " " + elem2.getDist());
                                 this.grafo[elem1.getPosPai()][elem2.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()));
                                 this.grafo[elem2.getPosPai()][elem1.getPosPai()] = (double) ((elem1.getDist() + elem2.getDist()));
                             }

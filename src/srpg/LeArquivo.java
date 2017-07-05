@@ -1,3 +1,19 @@
+/* <Sistema de Reconhecimento de Padrões utilizando Grafos.>
+    Copyright (C) <2017>  <Mateus Hideaki Taroda> <mateustaroda@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
+
 package srpg;
 
 import java.awt.image.BufferedImage;
@@ -58,7 +74,6 @@ public class LeArquivo {
                             this.img.setRGB(iter, col, 16711680);
                         }
                         col++;
-                        //this.b[col++][iter] = Integer.valueOf(String.valueOf(linha.charAt(i)));
                     }
                 }
                 iter++;
@@ -124,11 +139,6 @@ public class LeArquivo {
         }
         this.xc = sc / this.somaMatriz;
         this.yc = sl / this.somaMatriz;
-//        System.out.println("xc " + xc + " yc " + yc);
-//        File f = new File("C:\\Users\\mateu\\Desktop\\quadrado.jpg");
-//        this.img = ImageIO.read(f);
-//        this.img.setRGB(xc, yc, 255);
-//        ImageIO.write(img, "JPEG", f);
     }
 
     public void inverteMatrizAtributos() {
@@ -144,23 +154,6 @@ public class LeArquivo {
 
         this.matriz = rotacao;
         this.b = rotacaoB;
-
-        //90graus
-//        char rotacao[][] = new char[this.nColunas][this.nLinhas];
-//        int rotacaoBin[][] = new int[this.nColunas][this.nLinhas];
-//        for (int i = 0; i < nLinhas; i++) {
-//            for (int j = 0; j < nColunas; j++) {
-//                rotacao[nColunas - 1 - j][nLinhas - 1 - i] = this.matriz[i][j];
-//                rotacaoBin[nColunas - 1 - j][nLinhas - 1 - i] = this.b[i][j];
-//            }
-//        }
-//        int aux = this.nLinhas;
-//        this.nLinhas = this.nColunas;
-//        this.nColunas = aux;
-//        this.matriz = new char[nLinhas][nColunas];
-//        this.b = new int[nLinhas][nColunas];
-//        this.b = rotacaoBin;
-//        this.matriz = rotacao;
     }
 
     public void leMatrizAtributos(String nomeArq) throws FileNotFoundException {
@@ -191,24 +184,12 @@ public class LeArquivo {
                 iter++;
             }
             scanner.close();
-            //mostraMatriz();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erro na leitura do arquivo!");
         }
     }
 
-//    public void somaMatriz() {
-//        for (int i = 0; i < this.nLinhas; i++) {
-//            for (int j = 0; j < this.nColunas; j++) {
-//                if (this.matriz[i][j] != '0') {
-//                    if (this.matriz[i][j] != '1') {
-//                        this.nAtributos++;
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     public void mostraMatriz() {
         for (int i = 0; i < this.nLinhas; i++) {
