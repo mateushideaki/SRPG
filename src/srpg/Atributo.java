@@ -1,6 +1,8 @@
 /* <Sistema de Reconhecimento de Padrões utilizando Grafos.>
     Copyright (C) <2017>  <Mateus Hideaki Taroda> <mateustaroda@gmail.com>
 
+    This file is part of SRPG.
+
     SRPG is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
